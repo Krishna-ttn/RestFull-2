@@ -1,19 +1,18 @@
 package com.krishna.Restfull_2.controller;
 
-import com.fasterxml.jackson.databind.ser.FilterProvider;
-import com.fasterxml.jackson.databind.ser.PropertyFilter;
-import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
-import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import com.krishna.Restfull_2.models.User;
 import com.krishna.Restfull_2.models.UserEnhanced;
 import com.krishna.Restfull_2.service.UserEnhancedService;
 
 import com.krishna.Restfull_2.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.Link;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -26,16 +25,6 @@ public class UserEnhancedController {
     @Autowired
     UserService userService;
 
-//    //Ques 4
-//    @GetMapping("/userEnhanced/filter")
-//    public MappingJacksonValue filter(){
-//        MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(userEnhancedService.getUsers());// here given user list
-//        PropertyFilter filter = SimpleBeanPropertyFilter.serializeAllExcept("password");
-//        FilterProvider filterProvider = new SimpleFilterProvider().addFilter("UserEnhancedFilter",filter);
-//        mappingJacksonValue.setFilters(filterProvider);
-//
-//        return mappingJacksonValue;
-//    }
 
     //ques 5
     // A) MimeType Versioning
@@ -81,6 +70,28 @@ public class UserEnhancedController {
     @GetMapping(path = "/user", headers = "X-API-VERSION=2")
     public ResponseEntity<List<UserEnhanced>> getUsersHeaderV2() {
         return new ResponseEntity<>(userEnhancedService.getUsers(), HttpStatus.OK);
+    }
+
+    //Ques-6
+    @GetMapping(path = "v2/user/{id}")
+    public ResponseEntity<EntityModel<UserEnhanced>> getUserById(@PathVariable String id) {
+        UserEnhanced user = userEnhancedService.getUserById(id);
+        if (user == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        // Creating HATEOAS link to fetch all topics
+        Link topicsLink = WebMvcLinkBuilder
+                .linkTo(WebMvcLinkBuilder.methodOn(UserEnhancedController.class).getAllTopics())
+                .withRel("all-topics");
+
+        EntityModel<UserEnhanced> resource = EntityModel.of(user, topicsLink);
+
+        return ResponseEntity.ok(resource);
+    }
+    @GetMapping("/topics")
+    public ResponseEntity<String> getAllTopics() {
+        return ResponseEntity.ok("List of all topics");
     }
 
 }
