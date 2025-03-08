@@ -23,7 +23,7 @@ A) Create API which saves details of User (along with the password) but on succe
 B) Create another API that does the same by using Dynamic Filtering.**
 
 A) present in : /model/Users (used @JsonIgnore) , /controller/UserController
-B) present in : /model/UserDynamicFilter  , /controller/UserDynamicControlloer
+B) present in : /model/UserDynamicFilter  , /controller/UserDynamicFilterController
 used a diffrent model for dynamic Filtering , if applied to any Other user class for eg UserEnhanced , then would have to use filter in every Api
 
 **Q5)Versioning Restful APIs Create 2 API for showing user details. 
