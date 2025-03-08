@@ -16,7 +16,7 @@ Save details of the user using POST request. Delete a user using DELETE request.
 B) In swagger documentation, add the description of each class and URI so that in swagger UI the purpose of class and URI is clear.**
 
 present in : pom.xml , /model/User , /controller/UserController
-![image](https://github.com/user-attachments/assets/e88bccb6-b091-41a9-9931-443aacf36caf)
+![image](https://github.com/user-attachments/assets/76fc4b8a-f839-4dda-a25a-e57300c72098)
 
 **Q4)Static and Dynamic filtering 
 A) Create API which saves details of User (along with the password) but on successfully saving returns only non-critical data. (Use static filtering) 
