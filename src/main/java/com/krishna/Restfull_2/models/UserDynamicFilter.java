@@ -2,12 +2,11 @@ package com.krishna.Restfull_2.models;
 
 
 import com.fasterxml.jackson.annotation.JsonFilter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.hateoas.RepresentationModel;
 
 @JsonFilter("UserEnhancedFilter")
-public class UserDynamicFilter extends RepresentationModel<UserDynamicFilter> {
+public class UserDynamicFilter {
     @Schema(description = "Unique ID for the user of type Integer")
     private int id;
     @Schema(description = "Name of the user of type String")

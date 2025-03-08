@@ -3,9 +3,10 @@ package com.krishna.Restfull_2.models;
 import com.fasterxml.jackson.annotation.JsonFilter;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.xml.bind.annotation.XmlRootElement;
+import org.springframework.hateoas.RepresentationModel;
 
 
-public class UserEnhanced {
+public class UserEnhanced extends RepresentationModel<UserEnhanced> {
 
     @Schema(description = "Unique ID for the user of type String" )
     private String id;

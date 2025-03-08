@@ -79,15 +79,16 @@ public class UserEnhancedController {
         if (user == null) {
             return ResponseEntity.notFound().build();
         }
-
-        // Creating HATEOAS link to fetch all topics
+        //wrapping around Entity Model
+        EntityModel<UserEnhanced> userEnhancedEntityModel = EntityModel.of(user);
+        //creating HATEOAS link to fetch all topics
         Link topicsLink = WebMvcLinkBuilder
                 .linkTo(WebMvcLinkBuilder.methodOn(UserEnhancedController.class).getAllTopics())
                 .withRel("all-topics");
 
-        EntityModel<UserEnhanced> resource = EntityModel.of(user, topicsLink);
+        userEnhancedEntityModel.add(topicsLink);
 
-        return ResponseEntity.ok(resource);
+        return ResponseEntity.ok(userEnhancedEntityModel);
     }
     @GetMapping("/topics")
     public ResponseEntity<String> getAllTopics() {
